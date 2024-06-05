@@ -1,0 +1,24 @@
+---
+- name: insall package
+  import_tasks: packages.yml
+  tags: install_packages
+
+- name: hardening configuration 
+  import_tasks: hardening.yaml
+  tags: hardening
+
+- name: host file configure
+  import_tasks: hosts.yml
+  tags: hardening
+
+- name: fstab config
+  import_tasks: fstab.yml
+  tags: hardening
+
+- name: dns config
+  import_tasks: resolvconf.yml
+  tags: dns_config
+
+- name: logrotate config
+  import_tasks: journalconf.yml
+  tags: logrotate_config
