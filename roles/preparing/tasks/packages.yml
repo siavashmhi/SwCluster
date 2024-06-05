@@ -6,11 +6,15 @@
     update_cache: yes
     cache_valid_time: 86400
 
+- name: Remove systemd-timesyncd if it conflicts with ntpsec
+  apt:
+    name: systemd-timesyncd
+    state: absent
+
 - name: Install basic tools
   apt:
     name: "{{ packages }}"
     state: present
-    force_apt_get: yes
     update_cache: yes
 
 - name: Set hostname
