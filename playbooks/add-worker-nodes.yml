@@ -1,0 +1,24 @@
+- hosts: all
+  vars:
+    ansible_ssh_private_key_file: /Users/siavashmohseni/.ssh/id_rsa
+  become: true
+  serial: 1
+  gather_facts: true
+  name: Add worker nodes in docker swarm cluster
+  tasks:
+    - name: Get worker join token
+      command: docker swarm join-token -q worker
+      register: worker_join_token
+      when: ansible_hostname == 'manager-server-1'
+
+    - name: Join worker node
+      command: docker swarm join --token {{ hostvars['manager-server-1']['worker_join_token'].stdout }} {{ ADVERTISE_ADDRESS }}:2377
+      when: 
+        - ansible_hostname != 'manager-server-1'
+        - ansible_hostname != 'manager-server-2'
+        - ansible_hostname != 'manager-server-3'
+      ignore_errors: true
+
+    - name: Wait for token to be available
+      pause:
+        seconds: 5

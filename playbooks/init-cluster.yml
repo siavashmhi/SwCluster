@@ -1,0 +1,30 @@
+- hosts: manager-servers
+  vars:
+    ansible_ssh_private_key_file: /Users/siavashmohseni/.ssh/id_rsa
+  become: true
+  serial: 1
+  gather_facts: true
+  name: Create docker swarm cluster
+  tasks:
+    - name: Initialize Swarm
+      command: docker swarm init --advertise-addr {{ ADVERTISE_ADDRESS }}
+      register: swarm_init_output
+      changed_when: "'Swarm initialized' in swarm_init_output.stdout"
+      when: ansible_hostname == 'manager-server-1'
+      ignore_errors: true
+
+    - name: Get manager join token
+      command: docker swarm join-token -q manager
+      register: manager_join_token
+      when: ansible_hostname == 'manager-server-1'
+
+    - name: Join manager node
+      command: docker swarm join --token {{ hostvars['manager-server-1']['manager_join_token'].stdout }} {{ ADVERTISE_ADDRESS }}:2377
+      when: 
+        - ansible_hostname != 'manager-server-1'
+      ignore_errors: true
+
+    - name: Wait for token to be available
+      pause:
+        seconds: 5
+
