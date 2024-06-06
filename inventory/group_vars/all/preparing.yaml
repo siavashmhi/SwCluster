@@ -28,6 +28,8 @@ packages:
   - auditd
   - libpwquality-common
   - cracklib-runtime
+  - python-is-python3
+  - python3-pip
 
 # sshd configuration
 sshd_config:
@@ -55,6 +57,3 @@ auditd_space_left: 75
 auditd_space_left_action: email
 grub_audit_backlog_cmdline: audit_backlog_limit=8192
 grub_audit_cmdline: audit=1
-
-# advertise ip address for docker swarm cluster 
-ADVERTISE_ADDRESS: 192.168.1.3

@@ -1,0 +1,84 @@
+- hosts: all
+  vars:
+    ansible_ssh_private_key_file: /Users/siavashmohseni/.ssh/id_rsa
+    ansible_python_interpreter: /usr/bin/python3
+  become: true
+  serial: 1
+  gather_facts: true
+  name: Create docker swarm cluster
+  tasks:
+    - name: Initialize Swarm
+      community.docker.docker_swarm:
+        state: present
+        advertise_addr: "{{ ADVERTISE_ADDRESS }}"
+      register: swarm_init_output
+      when: ansible_hostname == 'manager-server-1'
+
+    - name: Wait for Swarm initialization to complete
+      pause:
+        seconds: 10
+      when: ansible_hostname == 'manager-server-1'
+
+    - name: Get Swarm Manager Token
+      command: docker swarm join-token -q manager
+      register: manager_token
+      when: inventory_hostname == "manager-server-1"
+      tags:
+        - swarm
+
+    - name: Join Manager Node Number 2 to Swarm Cluster
+      docker_swarm:
+        state: join
+        advertise_addr: "{{ ADVERTISE_ADDRESS_MANAGER2 }}"
+        join_token: "{{ hostvars['manager-server-1']['manager_token'].stdout }}"
+        remote_addrs: ['{{ ADVERTISE_ADDRESS }}:2377']
+      when: inventory_hostname == "manager-server-2"
+      tags:
+        - swarm
+
+    - name: Join Manager Node Number 3 to Swarm Cluster
+      docker_swarm:
+        state: join
+        advertise_addr: "{{ ADVERTISE_ADDRESS_MANAGER3 }}"
+        join_token: "{{ hostvars['manager-server-1']['manager_token'].stdout }}"
+        remote_addrs: ['{{ ADVERTISE_ADDRESS }}:2377']
+      when: inventory_hostname == "manager-server-3"
+      tags:
+        - swarm
+
+    - name: Get Swarm Worker Token
+      command: docker swarm join-token -q worker
+      register: worker_token
+      when: inventory_hostname == "manager-server-1"
+      tags:
+        - swarm
+
+    - name: Join Worker Node Number 1 to Swarm Cluster
+      docker_swarm:
+        state: join
+        advertise_addr: "{{ ADVERTISE_ADDRESS_WORKER1 }}"
+        join_token: "{{ hostvars['manager-server-1']['worker_token'].stdout }}"
+        remote_addrs: ['{{ ADVERTISE_ADDRESS }}:2377']
+      when: inventory_hostname == "worker-server-1" 
+      tags:
+        - swarm
+
+    - name: Join Worker Node Number 2 to Swarm Cluster
+      docker_swarm:
+        state: join
+        advertise_addr: "{{ ADVERTISE_ADDRESS_WORKER2 }}"
+        join_token: "{{ hostvars['manager-server-1']['worker_token'].stdout }}"
+        remote_addrs: ['{{ ADVERTISE_ADDRESS }}:2377']
+      when: inventory_hostname == "worker-server-2" 
+      tags:
+        - swarm
+
+    - name: Join Worker Node Number 3 to Swarm Cluster
+      docker_swarm:
+        state: join
+        advertise_addr: "{{ ADVERTISE_ADDRESS_WORKER3 }}"
+        join_token: "{{ hostvars['manager-server-1']['worker_token'].stdout }}"
+        remote_addrs: ['{{ ADVERTISE_ADDRESS }}:2377']
+      when: inventory_hostname == "worker-server-3" 
+      tags:
+        - swarm
