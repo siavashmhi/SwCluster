@@ -108,6 +108,12 @@ all:
           ansible_port: 22
 ```
 
+you can check ssh access to your servers with this command:
+
+```sh
+ansible all -m ping -i inventory/hosts.yml --user root --private-key /path/to/private-key
+```
+
 Change Advertise ip addresses:
 
 ```sh
@@ -122,5 +128,33 @@ ADVERTISE_ADDRESS_WORKER3: 192.168.1.5
 
 ```
 
-sudo ansible all -m ping -i inventory/hosts.yml --user root --private-key ~/.ssh/id_rsa
+### Step 2: Run preparing playbook for prepare ubuntu servers
 
+Run preparing playbook to prepare all ubuntu servers:
+
+```sh
+ansible-playbook -i inventory/hosts.yml playbooks/preparing.yml
+```
+### Step 3: Install docker on all ubuntu servers.
+
+Run docker playbook to install docker on all ubuntu servers:
+
+```sh
+ansible-playbook -i inventory/hosts.yml playbooks/docker.yml 
+```
+
+### Step 4: Install Python Docker SDk in your servers
+
+Run pyscript playbook for install python docker sdk on all servers:
+
+```sh
+ansible-playbook -i inventory/hosts.yml playbooks/pyscript.yml
+```
+
+### Step 5: Create your Docker swam cluster
+
+Run swarm-cluster playbook for setup your cluster:
+
+```sh
+ansible-playbook -i inventory/hosts.yml playbooks/swarm-cluster.yml
+```
