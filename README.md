@@ -76,36 +76,37 @@ all:
     manager-servers:
       hosts:
         manager-server-1:
-          ansible_host: 188.245.37.128   #change
+          ansible_host: ip_address #change
           ansible_user: root
           ansible_port: 22
 
         manager-server-2:
-          ansible_host: 188.245.37.132   #change
+          ansible_host: ip_address  #change
           ansible_user: root
           ansible_port: 22
 
         manager-server-3:
-          ansible_host: 188.245.37.108  #change
+          ansible_host: ip_address  #change
           ansible_user: root
           ansible_port: 22
     
     worker-servers:
       hosts:
         worker-server-1:
-          ansible_host: 188.245.36.92  #change 
+          ansible_host: ip_address  #change 
           ansible_user: root
           ansible_port: 22
 
         worker-server-2:
-          ansible_host: 49.13.162.129   #change 
+          ansible_host: ip_address  #change 
           ansible_user: root
           ansible_port: 22
 
         worker-server-3:
-          ansible_host: 168.119.172.101  #change 
+          ansible_host: ip_address #change 
           ansible_user: root
           ansible_port: 22
+
 ```
 
 you can check ssh access to your servers with this command:
@@ -119,12 +120,12 @@ Change Advertise ip addresses:
 ```sh
 cat inventory/group_vars/all/swarm.yaml
 
-ADVERTISE_ADDRESS: 192.168.1.3
-ADVERTISE_ADDRESS_MANAGER2: 192.168.1.4
-ADVERTISE_ADDRESS_MANAGER3: 192.168.1.2
-ADVERTISE_ADDRESS_WORKER1: 192.168.1.6
-ADVERTISE_ADDRESS_WORKER2: 192.168.1.7
-ADVERTISE_ADDRESS_WORKER3: 192.168.1.5
+ADVERTISE_ADDRESS: 192.168.1.2
+ADVERTISE_ADDRESS_MANAGER2: 192.168.1.3
+ADVERTISE_ADDRESS_MANAGER3: 192.168.1.4
+ADVERTISE_ADDRESS_WORKER1: 192.168.1.5
+ADVERTISE_ADDRESS_WORKER2: 192.168.1.6
+ADVERTISE_ADDRESS_WORKER3: 192.168.1.7
 
 ```
 
