@@ -5,3 +5,30 @@ ADVERTISE_ADDRESS_MANAGER3: 192.168.1.4
 ADVERTISE_ADDRESS_WORKER1: 192.168.1.5
 ADVERTISE_ADDRESS_WORKER2: 192.168.1.6
 ADVERTISE_ADDRESS_WORKER3: 192.168.1.7
+
+# docker swarm networks
+NETWORK1_NAME: "frontend_network"
+NETWORK1_BRIDGE_NAME: "frontend_network"
+NETWORK1_ENCRYPTED: 'no'
+
+NETWORK2_NAME: "backend_network"
+NETWORK2_BRIDGE_NAME: "backend_network"
+NETWORK2_ENCRYPTED: 'no'
+
+NETWORK3_NAME: "payment_network"
+NETWORK3_BRIDGE_NAME: "payment_network"
+NETWORK3_ENCRYPTED: 'yes'
+
+# docker swarm secrets
+SECRET1_NAME: postgres_password
+SECRET1_DATA_SRC: /opt/atsea-sample-shop-app/certs/domain.key
+
+SECRET2_NAME: staging_token
+SECRET2_DATA_SRC: "{{ lookup('pipe', 'echo staging') }}"
+
+SECRET3_NAME: revprox_key
+SECRET3_DATA_SRC: /opt/atsea-sample-shop-app/certs/domain.key
+
+
+SECRET4_NAME: revprox_cert
+SECRET4_DATA_SRC: /opt/atsea-sample-shop-app/certs/domain.crt
