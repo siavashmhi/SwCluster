@@ -1,34 +1,30 @@
 # advertise ip addresses for docker swarm cluster 
-ADVERTISE_ADDRESS: 192.168.1.2
-ADVERTISE_ADDRESS_MANAGER2: 192.168.1.3
-ADVERTISE_ADDRESS_MANAGER3: 192.168.1.4
-ADVERTISE_ADDRESS_WORKER1: 192.168.1.5
-ADVERTISE_ADDRESS_WORKER2: 192.168.1.6
-ADVERTISE_ADDRESS_WORKER3: 192.168.1.7
+ADVERTISE_ADDRESS: ip_address
+ADVERTISE_ADDRESS_MANAGER2: ip_address
+ADVERTISE_ADDRESS_MANAGER3: ip_address
+ADVERTISE_ADDRESS_WORKER1: ip_address
+ADVERTISE_ADDRESS_WORKER2: ip_address
+ADVERTISE_ADDRESS_WORKER3: ip_address
 
 # docker swarm networks
-NETWORK1_NAME: "frontend_network"
-NETWORK1_BRIDGE_NAME: "frontend_network"
+NETWORK1_NAME: "network1_name"
+NETWORK1_BRIDGE_NAME: "network1_bridge_name"
 NETWORK1_ENCRYPTED: 'no'
 
-NETWORK2_NAME: "backend_network"
-NETWORK2_BRIDGE_NAME: "backend_network"
+NETWORK2_NAME: "network2_name"
+NETWORK2_BRIDGE_NAME: "network2_bridge_name"
 NETWORK2_ENCRYPTED: 'no'
 
-NETWORK3_NAME: "payment_network"
-NETWORK3_BRIDGE_NAME: "payment_network"
+NETWORK3_NAME: "network3_name"
+NETWORK3_BRIDGE_NAME: "network3_bridge_name"
 NETWORK3_ENCRYPTED: 'yes'
 
 # docker swarm secrets
-SECRET1_NAME: postgres_password
-SECRET1_DATA_SRC: /opt/atsea-sample-shop-app/certs/domain.key
+SECRET1_NAME: secret1_name
+SECRET1_DATA_SRC: /path/to/file/secret1
 
-SECRET2_NAME: staging_token
-SECRET2_DATA_SRC: "{{ lookup('pipe', 'echo staging') }}"
+SECRET2_NAME: secret2_name
+SECRET2_DATA_SRC: /path/to/file/secret2
 
-SECRET3_NAME: revprox_key
-SECRET3_DATA_SRC: /opt/atsea-sample-shop-app/certs/domain.key
-
-
-SECRET4_NAME: revprox_cert
-SECRET4_DATA_SRC: /opt/atsea-sample-shop-app/certs/domain.crt
+SECRET3_NAME: secret3_name
+SECRET3_DATA_SRC: /path/to/file/secret3

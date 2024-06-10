@@ -6,7 +6,6 @@
   gather_facts: true
   name: Create networks in docker swarm cluster
   tasks:
-  
     - name: Create docker swarm overlay networks
       community.docker.docker_network:
         name: "{{ item.name }}"
@@ -19,7 +18,7 @@
         - { name: "{{ NETWORK1_NAME }}", bridge_name: "{{ NETWORK1_BRIDGE_NAME }}", encrypted: "{{ NETWORK1_ENCRYPTED }}" }
         - { name: "{{ NETWORK2_NAME }}", bridge_name: "{{ NETWORK2_BRIDGE_NAME }}", encrypted: "{{ NETWORK2_ENCRYPTED }}" }
         - { name: "{{ NETWORK3_NAME }}", bridge_name: "{{ NETWORK3_BRIDGE_NAME }}", encrypted: "{{ NETWORK3_ENCRYPTED }}" }
-
+      tags: create_networks
 
     - name: Read secrets from target node
       slurp:
@@ -27,8 +26,9 @@
       register: secret_contents
       loop: 
         - "{{ SECRET1_DATA_SRC }}"
+        - "{{ SECRET2_DATA_SRC }}"
         - "{{ SECRET3_DATA_SRC }}"
-        - "{{ SECRET4_DATA_SRC }}"
+      tags: create_secrets
 
     - name: Create Docker secrets
       community.docker.docker_secret:
@@ -41,11 +41,11 @@
           content: "{{ SECRET2_DATA_SRC }}"
         - name: "{{ SECRET3_NAME }}"
           content: "{{ secret_contents.results[1].content | b64decode }}"
-        - name: "{{ SECRET4_NAME }}"
-          content: "{{ secret_contents.results[2].content | b64decode }}"
       register: secrets
+      tags: create_secrets
 
     - name: Debug secret creation output
       debug:
         var: secrets
+      tags: create_secrets
 
