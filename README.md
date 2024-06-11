@@ -23,10 +23,11 @@ and automate installation process with Ansible.
 │   │       └── swarm.yaml
 │   └── hosts.yml
 ├── playbooks
+│   ├── cluster.yml
 │   ├── docker.yml
 │   ├── preparing.yml
 │   ├── pyscript.yml
-│   └── swarm-cluster.yml
+│   └── resources.yml
 └── roles
     ├── docker
     │   ├── handlers
