@@ -115,7 +115,7 @@ you can check ssh access to your servers with this command:
 ansible all -m ping -i inventory/hosts.yml --user root --private-key /path/to/private-key
 ```
 
-Change Advertise ip addresses and Change network and secret variables:
+Change Advertise ip addresses and Change network and secret variables,
 if you don't need to create network and secret resources,
 you don't need to change network and secret variables.
 
@@ -180,7 +180,7 @@ ansible-playbook -i inventory/hosts.yml playbooks/cluster.yml
 ### Step 6: Run resources.yml playbook for create network and secret resources.
 
 - if you don't need to create network and secret resources, you don't need to run this playbook.
-- with this playbook you can create three networks and three secrets, if you want to create more networks and secrets add your variables and tasks in inventory/group_vars/all/swarm/yml and playbbok/resources.yml.
+- with this playbook you can create three networks and three secrets, if you want to create more networks and secrets add your variables and tasks in inventory/group_vars/all/swarm.yml and playbook/resources.yml
 
 ```sh
 ansible-playbook -i inventory/hosts.yml playbooks/resources.yml
