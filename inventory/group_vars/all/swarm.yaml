@@ -1,10 +1,10 @@
 # advertise ip addresses for docker swarm cluster 
-ADVERTISE_ADDRESS: ip_address
-ADVERTISE_ADDRESS_MANAGER2: ip_address
-ADVERTISE_ADDRESS_MANAGER3: ip_address
-ADVERTISE_ADDRESS_WORKER1: ip_address
-ADVERTISE_ADDRESS_WORKER2: ip_address
-ADVERTISE_ADDRESS_WORKER3: ip_address
+ADVERTISE_ADDRESS: advertise_ip_address
+ADVERTISE_ADDRESS_MANAGER2: advertise_ip_address
+ADVERTISE_ADDRESS_MANAGER3: advertise_ip_address
+ADVERTISE_ADDRESS_WORKER1: advertise_ip_address
+ADVERTISE_ADDRESS_WORKER2: advertise_ip_address
+ADVERTISE_ADDRESS_WORKER3: advertise_ip_address
 
 # docker swarm networks
 NETWORK1_NAME: "network1_name"
